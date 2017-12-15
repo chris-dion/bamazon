@@ -40,13 +40,14 @@ function inventory(){
     	var query = "SELECT * FROM products WHERE ?";
     	connection.query(query, { item_id: id }, function(err2, res2) {
     		var amount = parseInt(res2[0].stock_quantity);
+    		var price = parseInt(res2[0].price);
 
     		if(purchase <= amount){
     			amount = amount - purchase;
     			var update = "UPDATE products SET ? WHERE ?";
 				connection.query(update, [{stock_quantity: amount}, {item_id: id}], function(err3, res3){
 				});
-
+				console.log("your total comes to : " + (purchase * price));
     		}else{
     			console.log("We don't have enough "+res2[0].product_name + " for your order.")
     		}
